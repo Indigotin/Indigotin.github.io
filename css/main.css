@@ -1090,7 +1090,8 @@ pre .javascript .function {
   bottom: 19px;
 }
 .header {
-  background: url("../images/timg.jpg");
+  background: url("http://wx1.sinaimg.cn/mw690/95dda403ly1fo11xgpf7dj21cz120nda.jpg");
+  background-size: cover;
 }
 .header-inner {
   position: relative;
@@ -1942,7 +1943,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #bfa4da;
+  background: #34414b;
 }
 .links-of-blogroll {
   font-size: 13px;
