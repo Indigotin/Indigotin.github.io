@@ -79,13 +79,64 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Child">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在CentOS7.4上搭建Fastdfs+nginx">
+<meta property="og:url" content="http://yoursite.com/2018/02/23/在CentOS7-4上搭建Fastdfs-nginx/index.html">
 <meta property="og:site_name" content="Child">
+<meta property="og:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqq8z6brpj20en0e8tgn.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqqizg0oyj21gk09mdgg.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqqj37wgtj207p00y3ya.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqqoif78mj20e802p0sq.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqqy6xdplj20hd01bglg.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqqyys5mpj209q01djr6.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqr28a7z4j207j01c3ya.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqr9jv9njj20e9019jr8.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqrckg1zuj21gq02oq3k.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqrdruwjoj20jq00yt8j.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqrhpway7j20cv02tmx3.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqrhsrbd1j2093016mwy.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqrk7ntjzj20b001emwy.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqrlt011tj20el01vt8l.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqrnl8clmj20dz01tq2s.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqrpi15rfj20au013gle.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqrr7d0njj20e500xjr7.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqrtl8bunj20jx028jre.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqrvko11yj20g009i0t4.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqrvneprvj20jz02bwec.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqs1pk08aj20j20mkab1.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqs7vgc9ej20bk032t8p.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqscckvs2j20jw03hq30.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqsdhwu8gj20rt0badgv.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqsfglr5kj20c408rdft.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqshe14asj20bn0ag3yl.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqslptmzvj208401ijr6.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqslsg6ozj20fq023gli.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqslxeyxxj20g3028glj.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqsm13i4nj20f202hmx2.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqsm3mua8j20ck03amx2.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqsrvoug0j207x07lq2z.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqstlulm5j20ad00y0sj.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqsuh7713j20sr05n3za.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqsxcmiczj20fg0adwek.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqsxeta37j20by09r3yj.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqszsy8k1j20tg0angne.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqt2lnt4xj208201ajr6.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqt2o1xdlj20ea01sq2s.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqt2q9osuj206c019t8h.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqt64dh0nj20i40533yo.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqt7kkz6yj21gs0bpglz.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqt8odscqj209t07jaa2.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqt8r2u63j207z0100si.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqtaygjgmj20i7010glh.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqtb1gjsfj21hc0r7twj.jpg">
+<meta property="og:updated_time" content="2018-02-23T15:50:02.516Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Child">
+<meta name="twitter:title" content="在CentOS7.4上搭建Fastdfs+nginx">
+<meta name="twitter:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载">
+<meta name="twitter:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqq8z6brpj20en0e8tgn.jpg">
 
 
 
@@ -115,13 +166,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/23/在CentOS7-4上搭建Fastdfs-nginx/"/>
 
 
 
 
 
-  <title>Child</title>
+  <title>在CentOS7.4上搭建Fastdfs+nginx | Child</title>
   
 
 
@@ -140,8 +191,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/Indigotin" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -231,9 +281,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -263,9 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/23/在CentOS7-4上搭建Fastdfs-nginx/" itemprop="url">在CentOS7.4上搭建Fastdfs+nginx</a></h1>
+          <h1 class="post-title" itemprop="name headline">在CentOS7.4上搭建Fastdfs+nginx</h1>
         
 
         <div class="post-meta">
@@ -315,9 +363,7 @@
       
 
       
-        
-          
-            <p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。<br>FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载等服务。<br>                                                                                      ————《百度百科》</p>
+        <p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。<br>FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载等服务。<br>                                                                                      ————《百度百科》</p>
 <p>以下是FastDFS的框架模式：</p>
 <p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1foqq8z6brpj20en0e8tgn.jpg" alt="image"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">配置环境：centOS 7.4 单机配置</span><br></pre></td></tr></table></figure>
@@ -508,8 +554,6 @@
 <p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1foqtb1gjsfj21hc0r7twj.jpg" alt="image"></p>
 <p>FastDFS+nginx的配置到底就结束了。</p>
 
-          
-        
       
     </div>
     
@@ -519,6 +563,35 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Lan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Lan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
@@ -526,157 +599,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/01/关于服务器监控/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://wx4.sinaimg.cn/mw690/95dda403ly1fo11h8w14mg20dc0dctzm.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Child">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/01/关于服务器监控/" itemprop="url">关于服务器监控--</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-01T20:57:07+08:00">
-                2018-02-01
-              </time>
+              <a href="/2018/02/01/关于服务器监控/" rel="next" title="关于服务器监控--">
+                <i class="fa fa-chevron-left"></i> 关于服务器监控--
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>寒假应实验室一位老师的邀在实验室完成一个框架的搭建。其实也就纯属酱油。</p>
-<p>刚去的时候分配的两个任务是：</p>
-<p>1、    服务器监控</p>
-<p>2、    文件存储系统（fastdfs）</p>
-<p>一开始和学长们的沟通说的是监测服务器的各项指标，比如cpu、内存及网络的使用情况。而其又涉及到多台服务器之间的监控，毫无疑问是需要用到网络编程的。最后也是利用socket的编程实现的网络通信。<br>类似于htop 指令这样的存在。</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/95dda403ly1fo18yxus1zj20rl0efq3x.jpg" alt="image"></p>
-<p>大概实现的方法有两种：</p>
-<ol>
-<li><p>调取linux系统下的shell，通过系统API 获取当前系统的各项指标。</p>
-</li>
-<li><p>Linux 系统下有一个/proc的目录，/proc目录是一种文件系统，即proc文件系统。/proc是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，用户可以通过这些文件查看有关系统硬件及当前正在运行进程的信息，甚至可以通过更改其中某些文件来改变内核的运行状态。</p>
-</li>
-</ol>
-<p>相比之下，通过shell去获取系统信息无疑是多了一步操作了，进程少的时候体现不出来，但一旦进程达到一定数量，就会大量减慢读取速度（尽管这是一个小玩意，考虑考虑也是没有问题的…）</p>
-<p>对于一个对前端毫无兴趣的后端人士而言，web界面我默默地扒了别人的用（文末会贴出地址）手动滑稽</p>
-<p><strong>环境说明：</strong></p>
-<blockquote>
-<p>Server：win10 PyCharm </p>
-<p>Client：Ubuntu 16.04</p>
-</blockquote>
-<p>Python标本均为3.6。由于2和3的版本之间有一些兼容性的问题，推荐使用python3，并保持server和client端的python版本一致。注意Ubuntu默认的phthon版本为2.7。</p>
-<p>记得在Client.py里面手动配置一下Server的ip，User和Password 随你开心。后面有空可能会写一下shell脚本自动配置。 </p>
-<p>就酱。</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/95dda403ly1fnzxsn7v5rj211s096mz7.jpg" alt="image"></p>
-<p>代码链接：<br><a href="https://github.com/Indigotin/ServerMonitor" target="_blank" rel="noopener">https://github.com/Indigotin/ServerMonitor</a></p>
-<p>部分参考：<br><a href="https://github.com/tenyue/ServerStatus" target="_blank" rel="noopener">https://github.com/tenyue/ServerStatus</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -686,195 +630,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/09/github-hexo搭建静态博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://wx4.sinaimg.cn/mw690/95dda403ly1fo11h8w14mg20dc0dctzm.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Child">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/09/github-hexo搭建静态博客/" itemprop="url">github+hexo搭建静态博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-09T14:14:43+08:00">
-                2017-08-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>Step 1：创建github仓库</p>
-</li>
-<li><p>Step 2：安装node.js</p>
-</li>
-<li><p>Step 3：安装Git</p>
-</li>
-<li><p>Step 4：安装Hexo</p>
-</li>
-<li><p>Step 5：推送网站</p>
-</li>
-</ul>
-<p><strong>创建github账号</strong></p>
-<p>首先先注册一个github账号  <a href="https://github.com/" target="_blank" rel="noopener">github</a>,<br>注册完以后创建一个仓库<br>仓库的命名原则是: ==github用户名.github.io==<br>例如我的github账号是Indigotin，因此我的仓库命名为：==Indigotin.github.io==,这是命名习惯 </p>
-<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fidh7qob1zj20co03kq2s.jpg" alt="image"></p>
-<p><strong>安装Node.js</strong></p>
-<p><a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">node.js Download</a><br>下载安装成功后，Win+R打开命令行测试是否安装成功</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fidhuodkpij2082021q2q.jpg" alt="image"></p>
-<p>同时检查npm的安装情况</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fidhw8kf6mj206r01yjr6.jpg" alt="image"></p>
-<p><strong>安装Git</strong></p>
-<p><a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git-Download</a></p>
-<p>一路next，安装成功以后鼠标右键桌面会有Git Bash/Git GUI 的图标 </p>
-<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fidhn4d4z3j207j0aqq36.jpg" alt="image"></p>
-<p>选择Git Bash ，配置我们的账户信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;GitHub用户名&quot;</span><br><span class="line">git config --global user.email &quot;GitHub注册邮箱&quot;</span><br></pre></td></tr></table></figure>
-<p>设置好了全局用户之后，我们就开始生成ssh密钥</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;GitHub注册邮箱&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fidi8wdxwzj20md0azmxs.jpg" alt="image"><br>直接三个回车即可，或者你也可以自定义密钥文件名</p>
-<p>找到用户目录下的.ssh文件夹，密钥信息就存放在这个文件夹里</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fidibnm241j205w01gwe9.jpg" alt="image"></p>
-<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fidibo21twj20kh03674a.jpg" alt="image"></p>
-<p>打开后缀名为pub的文本，复制里面的全部内容，现在我们去到github网页配置我们的ssh密钥</p>
-<p>在github账户下选择setting</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fidifc5jqaj207508vt8q.jpg" alt="image"></p>
-<p>选择ssh and GPG keys </p>
-<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fidifas80sj208w0kxjru.jpg" alt="image"></p>
-<p>点击 New SSH key<br><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fidifb7ujtj20qm03pq2z.jpg" alt="image"></p>
-<p>title可任取，然后将刚刚后缀为pub文档中的内容复制到Key中，保存即可</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fidifbla7rj20pu0e374k.jpg" alt="image"></p>
-<p>打开Git Bash，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh git@github.com</span><br></pre></td></tr></table></figure>
-<p>测试密钥是否成功连上，成功连上的密钥会由灰色变为绿色</p>
-<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fidil3jl8jj205g043746.jpg" alt="image"></p>
-<p><strong>安装Hexo</strong></p>
-<p>==hexo 是博客框架，将支持的类型的文件转换成静态Web页面（html+css+JavaScript）。==</p>
-<p>我们在电脑上创建想要存放博客内容的文件夹。进入文件夹，鼠标右键，选择Git Bash</p>
-<p>使用npm命令安装Hexo，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>安装成功以后初始化我们的博客：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-<p>任意生成一篇博客：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo new “博客名称”</span><br><span class="line"></span><br><span class="line">hexo g</span><br><span class="line"> </span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>在浏览器中输入  <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>   预览本地博客</p>
-<p><strong>推送网站</strong></p>
-<p>打开本地博客所在文件夹，找到_config.yml文档打开<br><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fidip5wzbbj20mg0am0tj.jpg" alt="image"></p>
-<p>配置站点信息</p>
-<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fidirtgibzj20gk040weh.jpg" alt="image"></p>
-<p>repo:后面填写仓库的地址</p>
-<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fidir247bmj20fb07vaak.jpg" alt="image"></p>
-<p>注意所以填写的内容和：之间都需要一个==空格符==，配置完成后保存退出。</p>
-<p>最后安装Git部署插件，输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<p>接下来开始推送网站，输入命令:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean </span><br><span class="line">hexo g </span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-<p>接下来就可以访问你的网站了，网站地址为： ==github用户名.github.io==，<br>例如我的网站地址为 <a href="https://indigotin.github.io/" target="_blank" rel="noopener">Indigotin</a>，你的博客已经正式上线啦</p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -882,6 +642,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -902,8 +666,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -965,6 +738,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、-安装libfastcommon"><span class="nav-number">1.</span> <span class="nav-text">一、    安装libfastcommon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、-安装FastDFS"><span class="nav-number">2.</span> <span class="nav-text">二、    安装FastDFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、-配置tracker节点"><span class="nav-number">3.</span> <span class="nav-text">三、    配置tracker节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有关vim的一些简单操作"><span class="nav-number">3.0.1.</span> <span class="nav-text">有关vim的一些简单操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、-配置storage节点"><span class="nav-number">4.</span> <span class="nav-text">四、    配置storage节点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、-给storage安装nginx并配置"><span class="nav-number">5.</span> <span class="nav-text">五、    给storage安装nginx并配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、-给tracker安装nginx并配置"><span class="nav-number">6.</span> <span class="nav-text">六、    给tracker安装nginx并配置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1111,6 +900,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
