@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqstlulm5j20ad00y0sj.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqsuh7713j20sr05n3za.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqsxcmiczj20fg0adwek.jpg">
-<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqsxeta37j20by09r3yj.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqtoab38dj20e00dgt90.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1foqszsy8k1j20tg0angne.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqt2lnt4xj208201ajr6.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1foqt2o1xdlj20ea01sq2s.jpg">
@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqt8r2u63j207z0100si.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1foqtaygjgmj20i7010glh.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1foqtb1gjsfj21hc0r7twj.jpg">
-<meta property="og:updated_time" content="2018-02-23T15:50:02.516Z">
+<meta property="og:updated_time" content="2018-02-23T16:04:39.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在CentOS7.4上搭建Fastdfs+nginx">
 <meta name="twitter:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载">
@@ -461,7 +461,7 @@
 <p>nginx安装第三方模块：</p>
 <p>==./configure –prefix=/你的安装目录  –add-module=/第三方模块目录==</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/opt/data/nginx --add-module=/fastdfs-nginx-module/src</span><br></pre></td></tr></table></figure>
-<p>此时出现一些包找不到的情况</p>
+<p>如果此时出现一些包找不到的情况</p>
 <p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1foqs7vgc9ej20bk032t8p.jpg" alt="image"></p>
 <p>解决方法是采用以下命令安装依赖的包：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install pcre-devel</span><br><span class="line">yum install zlib zlib-devel</span><br><span class="line">yum install openssl openssl-devel</span><br></pre></td></tr></table></figure>
@@ -511,7 +511,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd nginx-1.8.0</span><br><span class="line">./configure --prefix=/opt/data/nginx2 --add-module=/fastdfs-nginx-module/src</span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 <p>修改nginx2下conf里的nginx.conf配置如下：</p>
 <p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1foqsxcmiczj20fg0adwek.jpg" alt="image"></p>
-<p>=====&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<img src="http://wx3.sinaimg.cn/mw690/95dda403gy1foqsxeta37j20by09r3yj.jpg" alt="image"></p>
+<p>=====&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<img src="http://wx4.sinaimg.cn/mw690/95dda403gy1foqtoab38dj20e00dgt90.jpg" alt="image"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream fdfs_group1 &#123;</span><br><span class="line">        server 127.0.0.1:9999;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">location /group1/M00 &#123;</span><br><span class="line">        proxy_pass http://fdfs_group1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>启动nginx:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/data/nginx2/sbin/nginx</span><br></pre></td></tr></table></figure>
@@ -551,6 +551,8 @@
 <p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1foqtaygjgmj20i7010glh.jpg" alt="image"></p>
 <p>上传成功之后会返回文件的储存路径：group1/M00/00/00/wKh0kVb8xZuAdQGUAAfp5oSKTdo388.jpg</p>
 <p>在浏览器中输入ip地址和端口号以及返回的储存路径即可通过nginx访问：</p>
+<p><a href="http://35.194.213.231:8888/group1/M00/00/00/CowAA1qQGHiAckFjAAIILXzxC_k309.jpg" target="_blank" rel="noopener">Example</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">35.194.213.231:8888/group1/M00/00/00/CowAA1qQGHiAckFjAAIILXzxC_k309.jpg</span><br></pre></td></tr></table></figure>
 <p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1foqtb1gjsfj21hc0r7twj.jpg" alt="image"></p>
 <p>FastDFS+nginx的配置到底就结束了。</p>
 
