@@ -246,6 +246,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/开源监控系统Zabbix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/mw690/95dda403ly1fo11h8w14mg20dc0dctzm.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Child">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/06/开源监控系统Zabbix/" itemprop="url">开源监控系统Zabbix</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T23:07:24+08:00">
+                2018-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>继上一篇监控脚本之后，应要求需要找到一个开源监控系统，能直接对应用进程进行检测，例如Tomcat等应用程序，通过这些应用程序能够实时知道项目的运行情况。</p>
+<p>最后基本确定了两个开源项目: Zabbix 和 Nagios<br>看了许多比较之后还是觉得Zabbix跟加适合这次的分布式系统，以及zabbix提供的JMX接口也可以很好的监控与java相关的程序。</p>
+<h3 id="什么是zabbix呢？"><a href="#什么是zabbix呢？" class="headerlink" title="什么是zabbix呢？"></a>什么是zabbix呢？</h3><p>zabbix是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。（来自百度百科）</p>
+<h3 id="Zabbix可以监控什么？"><a href="#Zabbix可以监控什么？" class="headerlink" title="Zabbix可以监控什么？"></a>Zabbix可以监控什么？</h3><p>通过安装不同的包，可以让Zabbix支持更多的监控类型。<br>•    ssh，需要安装libssh2<br>•    SNMP，需要安装net-snmp<br>•    IPMI，需要安装OpenIPMI<br>•    icmp，需要安装fping<br>•    libcurl,监控web项<br>•    libiksemel，支持 jabber 报警  </p>
+<p>因此他的可监控对象包括:<br>•    设备:服务器、路由器、交换机、IO系统<br>•    软件:OS、网络、应用程序  </p>
+<h2 id="常见架构："><a href="#常见架构：" class="headerlink" title="常见架构："></a>常见架构：</h2><ol>
+<li><p>Server/Agent模式：</p>
+<p> <img src="http://note.youdao.com/favicon.ico" alt="image"></p>
+</li>
+<li>Proxy代理模式：<br> <img src="http://note.youdao.com/favicon.ico" alt="image"></li>
+</ol>
+<p>这种模式的好处在于，当Agent主机数量变多的时候，Proxy可以分担Server端的压力。     由于只是搭建测试，因此我只使用了一台虚拟机做服务器，以及一个agent端，因此选用的是Server/Agent模式。</p>
+<h2 id="Zabbix支持的主要监控方式："><a href="#Zabbix支持的主要监控方式：" class="headerlink" title="Zabbix支持的主要监控方式："></a>Zabbix支持的主要监控方式：</h2><p>Zabbix主要有Agent, Trapper, SNMP, JMX, IPMI这几种监控方式。此次主要使用的是Agent和JMX方式，主要介绍一下这两种监控方式。</p>
+<h3 id="Agent监控方式"><a href="#Agent监控方式" class="headerlink" title="Agent监控方式"></a>Agent监控方式</h3><p>在Agent监控方式下，zabbix-agent会主动收集本机的监控信息并通过TCP协议与zabbix-server传递信息。Agent监控方式分为主动和被动模式。在被动模式下，zabbix-agent监听10050端口，等待zabbix-server的监控信息收集信息请求；在主动模式下，zabbix-agent收集监控信息并通过10050端口主动将数据传给zabbix-server所在服务器的10051端口。</p>
+<h3 id="JMX监控方式"><a href="#JMX监控方式" class="headerlink" title="JMX监控方式"></a>JMX监控方式</h3><p>JMX，全称Java Management Extensions，即Java管理拓展，是Java平台为应用程序，设备，系统等植入管理功能的框架。在zabbix中，JMX数据的获取由zabbix-java-gateway代理程序来负责数据的采集。可以详细地监控各类Java程序的运行状态。</p>
+<p><img src="http://note.youdao.com/favicon.ico" alt="image"></p>
+<p>如上面的Zabbix JMX监控架构图所示，Zabbix是使用了一个叫做Java Gateway的应用去监控JMX的。<br>前端界面由php提供支持，因此需要配置LAMP环境。后端采取到数据库后将数据存放在数据库中，因此又要完成数据库相关的配置。<br>然后前端界面从数据库中读取信息来显示到网页上。总体架构如下所示。</p>
+<p><img src="http://note.youdao.com/favicon.ico" alt="image"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/24/关于求解24点游戏所有方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1060,7 +1197,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
