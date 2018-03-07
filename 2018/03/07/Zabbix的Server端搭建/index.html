@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="http://wx1.sinaimg.cn/mw690/95dda403ly1fo11hmqvu0j20dw0dw74g.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="http://wx1.sinaimg.cn/mw690/95dda403ly1fo11hmqvu0j20dw0dw74g.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="http://wx1.sinaimg.cn/mw690/95dda403ly1fo11hmqvu0j20dw0dw74g.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="首先说明一下我的配置环境： 1Server：CentOS 7.4 vmware虚拟机 首先为server端配置zabbix、epel的源 12rpm -ivh http://repo.zabbix.com/zabbix/3.5/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm yum install -y epel-release    清除系统y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zabbix的Server端搭建">
+<meta property="og:url" content="http://yoursite.com/2018/03/07/Zabbix的Server端搭建/index.html">
+<meta property="og:site_name" content="Child">
+<meta property="og:description" content="首先说明一下我的配置环境： 1Server：CentOS 7.4 vmware虚拟机 首先为server端配置zabbix、epel的源 12rpm -ivh http://repo.zabbix.com/zabbix/3.5/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm yum install -y epel-release    清除系统y">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp44z4mn7wj20t60333ys.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp450ngj8oj20au065q31.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp450qq6lqj20v902nglu.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp450spum8j20mu021q2w.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp450usfz6j21a703o74f.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp453gksbjj20ee092wf2.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp45kuilydj20gw02njrk.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4h73kuj1j20r805vgm7.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4h8cdcw0j20g00870t1.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4hbh6mfgj20m1021jrj.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4hvhu3f5j21750dl75l.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4hydglejj20yb073gmk.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4i1ibdllj20gv01jdfq.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4i516b9cj20k80e4myi.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4iihhl55j20ca01ywec.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4if0evbwj20hp01ha9y.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4igjxllkj20nm01ot8n.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4ikjmx55j20ag01s744.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4io5ah4mj20pu01ka9y.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4o9rfoioj20h30lst9y.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4jnbqpqlj208c03rglj.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4joerecbj20g404ywel.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4jogw0v8j20aq038746.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4jou1afwj206a03k0sm.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4jp4a1ixj206902rmx0.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4jsdpvljj207902d744.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4jsgmic6j206d03ea9x.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4jsit3aoj205l0350sl.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4jskxvdzj207k02y746.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4jsn4qy8j20b4020a9x.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4juqmb8jj206j02kglh.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4is6mez6j20g201xa9x.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4o48aag8j20qp07n3yr.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4itzc0zkj21ao04xgly.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4j0rh4xlj20yq02djr9.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4j5msjvrj20dx0dn3ze.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4j8tqegjj20dj08mgm5.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4okcieqdj21bp0o33zj.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4olxs7hej20p00etwfj.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4onil4ubj20nw0e93z9.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4ophksrmj20ns0e2wf0.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4oqisv5gj20nq0e7aal.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4ors4723j20aw0domxb.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4ot9vus0j21bq0oe40t.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4ovksm01j20yx05bt97.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4oxgt9h8j20ff0alq37.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4oyff423j20z80lh75m.jpg">
+<meta property="og:updated_time" content="2018-03-07T15:56:10.492Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zabbix的Server端搭建">
+<meta name="twitter:description" content="首先说明一下我的配置环境： 1Server：CentOS 7.4 vmware虚拟机 首先为server端配置zabbix、epel的源 12rpm -ivh http://repo.zabbix.com/zabbix/3.5/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm yum install -y epel-release    清除系统y">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp44z4mn7wj20t60333ys.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/07/Zabbix的Server端搭建/"/>
+
+
+
+
+
+  <title>Zabbix的Server端搭建 | Child</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Indigotin" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+      <div class="site-meta-headline">
+        <a>
+          <img class="custom-logo-image" src="http://wx4.sinaimg.cn/mw690/95dda403ly1fo11h8w14mg20dc0dctzm.gif"
+               alt="Child"/>
+        </a>
+      </div>
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Child</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/07/Zabbix的Server端搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/mw690/95dda403ly1fo11h8w14mg20dc0dctzm.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Child">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Zabbix的Server端搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T10:49:20+08:00">
+                2018-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先说明一下我的配置环境：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server：CentOS 7.4 vmware虚拟机</span><br></pre></td></tr></table></figure>
+<p>首先为server端配置zabbix、epel的源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh http://repo.zabbix.com/zabbix/3.5/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm </span><br><span class="line">yum install -y epel-release</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp44z4mn7wj20t60333ys.jpg" alt="image"></p>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp450ngj8oj20au065q31.jpg" alt="image"></p>
+<hr>
+<p>清除系统yum缓存，并重新生成新的yum缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp450qq6lqj20v902nglu.jpg" alt="image"></p>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp450spum8j20mu021q2w.jpg" alt="image"></p>
+<hr>
+<p>安装zabbix databases </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install zabbix-server-mysql zabbix-get</span><br><span class="line">rpm -ql zabbix-server-mysql</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp450usfz6j21a703o74f.jpg" alt="image"></p>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp453gksbjj20ee092wf2.jpg" alt="image"></p>
+<hr>
+<p>解压获得zabbix数据库的初始脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gunzip /usr/share/doc/zabbix-server-mysql-4.0.0/create.sql.gz</span><br><span class="line">ll create.sql</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp45kuilydj20gw02njrk.jpg" alt="image"></p>
+<hr>
+<p>Zabbix所生成的web图像的数据需要从数据库获得，所以server端需要安装mysql。mysql安装,获得下载路径，进行下载：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.mysql.com//mysql57-community-release-el7-11.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4h73kuj1j20r805vgm7.jpg" alt="image"></p>
+<hr>
+<p>如果没有安装wget话，使用yum命令安装wget</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install wget</span><br></pre></td></tr></table></figure>
+<hr>
+<p>安装mysql源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql57-community-release-el7-11.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4h8cdcw0j20g00870t1.jpg" alt="image"></p>
+<hr>
+<p>检查mysql源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist enabled | grep &quot;mysql.*-community.*&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4hbh6mfgj20m1021jrj.jpg" alt="image"></p>
+<hr>
+<p>安装mysql服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql-community-server</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4hvhu3f5j21750dl75l.jpg" alt="image"></p>
+<hr>
+<p>启动mysql服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
+<hr>
+<p>查看服务状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4hydglejj20yb073gmk.jpg" alt="image"><br>当状态为ACTIVE时就表明启动成功</p>
+<hr>
+<p>设置开机启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable mysqld</span><br></pre></td></tr></table></figure>
+<hr>
+<p>几个关于mysql的命令:</p>
+<p>启动mysql服务<br>systemctl start mysqld.service</p>
+<p>停止mysql服务<br>systemctl stop mysqld.service</p>
+<p>重启mysql服务<br>systemctl restart mysqld.service</p>
+<p>查看mysql服务当前状态<br>systemctl status mysqld.service</p>
+<p>设置mysql服务开机自启动<br>systemctl enable mysqld.service</p>
+<p>停止mysql服务开机自启动<br>systemctl disable mysqld.service</p>
+<p>重新载入<br>systemctl daemon-reload </p>
+<p>调整mysql源的默认版本号：（修改对应版本下的enabled即可） 1启用 0不启用   </p>
+<h2 id="vim-etc-yum-repos-d-mysql-community-repo"><a href="#vim-etc-yum-repos-d-mysql-community-repo" class="headerlink" title="vim /etc/yum.repos.d/mysql-community.repo"></a>vim /etc/yum.repos.d/mysql-community.repo</h2><p>接下来修改root登录密码<br>mysql第一次启动时，会在/var/log/mysqld.log文件中生成一个root的临时密码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &apos;temporary password&apos; /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+<hr>
+<p>登录系统，修改root密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line">mysql&gt;ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;MyNewPass4!&apos;;</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4i1ibdllj20gv01jdfq.jpg" alt="image"><br>注意mysql的密码设置必须含有大小写字母，数字及特殊字符。   </p>
+<hr>
+<p>配置系统为UTF-8编码,修改/etc/my.cnf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character_set_server=utf8</span><br><span class="line">init_connect=&apos;SET NAMES utf8&apos;</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4i516b9cj20k80e4myi.jpg" alt="image"></p>
+<hr>
+<p>数据库安装后，需要自己手动创建zabbix的数据库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line">mysql&gt;create database zabbix charset &apos;utf8&apos;;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4iihhl55j20ca01ywec.jpg" alt="image"></p>
+<hr>
+<p>创建一个zabbix用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;create user &apos;zabbix&apos;@&apos;localhost&apos; identified by &apos;MyNewPass4!&apos;;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4if0evbwj20hp01ha9y.jpg" alt="image"></p>
+<hr>
+<p>赋给用户zabbix访问所有库的权限(为了安全性考虑不使用root用户)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;grant all privileges on zabbix.* to &apos;zabbix&apos;@&apos;localhost&apos; identified by &apos;MyNewPass4!&apos;;</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4igjxllkj20nm01ot8n.jpg" alt="image"></p>
+<hr>
+<p>刷新权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;flush privileges;</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4ikjmx55j20ag01s744.jpg" alt="image"></p>
+<hr>
+<p>创建完成后执行对应的sql初始化脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p -Dzabbix &lt; /usr/share/doc/zabbix-server-mysql-4.0.0/create.sql</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4io5ah4mj20pu01ka9y.jpg" alt="image"></p>
+<p>请注意自己的create.sql文件路径。</p>
+<p>此时查看zabbix数据库发现对应的表已生成：   </p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4o9rfoioj20h30lst9y.jpg" alt="image"></h2><p>接下来进行zabbix-server的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/zabbix/zabbix_server.conf</span><br></pre></td></tr></table></figure>
+<h3 id="以下列出的是需要修改的项目："><a href="#以下列出的是需要修改的项目：" class="headerlink" title="以下列出的是需要修改的项目："></a>以下列出的是需要修改的项目：</h3><p>#服务端监听端口<br><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4jnbqpqlj208c03rglj.jpg" alt="image"></p>
+<p>#通过LogType指定通过哪种方式记录日志<br><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4joerecbj20g404ywel.jpg" alt="image"></p>
+<p>#设置日志文件位置<br><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4jogw0v8j20aq038746.jpg" alt="image"></p>
+<p>#指明日志文件达到多大时自动滚动，单位为MB。设置为0表示不会滚动，所有日志文件储存在一个文件中<br><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4jou1afwj206a03k0sm.jpg" alt="image"></p>
+<p>#定义日志的详细程度，即为日志级别<br><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4jp4a1ixj206902rmx0.jpg" alt="image"></p>
+<p>#设置Zabbix数据库所在的服务器IP，此处mysql和Zabbix安装在同一台服务器上，因此为localhost<br><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4jsdpvljj207902d744.jpg" alt="image"></p>
+<p>#指定zabbix数据库对应的名称<br><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4jsgmic6j206d03ea9x.jpg" alt="image"></p>
+<p>#指定zabbix数据库对应的用户名<br><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4jsit3aoj205l0350sl.jpg" alt="image"></p>
+<p>#指定zabbix数据库对应的数据库用户密码<br><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4jskxvdzj207k02y746.jpg" alt="image"></p>
+<p>#如果数据库服务与server端在同一台服务器上，可以通过DBSocket指定数据库本地套接字文件的位置，但是需要注意，即使设置了套接字文件的位置，还是需要配合DBHost参数。否则在登录Zabbix控制台时，可能会出现警告<br><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4jsn4qy8j20b4020a9x.jpg" alt="image"></p>
+<p>#指定zabbix数据库服务监听的端口号<br><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4juqmb8jj206j02kglh.jpg" alt="image"></p>
+<hr>
+<p>配置完成后启动zabbix-server：启动后10051端口已被监听：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start zabbix-server.service</span><br><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
+<p>启动不成功记得关闭Linux的selinux防火墙配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setenforce 0</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4is6mez6j20g201xa9x.jpg" alt="image"></p>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4o48aag8j20qp07n3yr.jpg" alt="image"></h2><p>Zabbix-web是由php构建的，所以需要lamp环境，所以进行以下一系列的安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install httpd php php-mysql php-mbstring php-gd php-bcmath php-ldap php-xml</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp4itzc0zkj21ao04xgly.jpg" alt="image"></p>
+<hr>
+<p>继续安装所需的两个包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install zabbix-web zabbix-web-mysql</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4j0rh4xlj20yq02djr9.jpg" alt="image"></p>
+<hr>
+<p>查看刚刚安装的zabbix-web的路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ql zabbix-web</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4j5msjvrj20dx0dn3ze.jpg" alt="image"></p>
+<p>接下来对httpd相关的zabbix的文档进行配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/httpd/conf.d/zabbix.conf</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4j8tqegjj20dj08mgm5.jpg" alt="image"></p>
+<hr>
+<p>启动httpd服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start httpd.service</span><br></pre></td></tr></table></figure>
+<h3 id="接下来就可以进行可视化页面的配置了："><a href="#接下来就可以进行可视化页面的配置了：" class="headerlink" title="接下来就可以进行可视化页面的配置了："></a>接下来就可以进行可视化页面的配置了：</h3><p>在浏览器中输入以下地址即可访问zabbix的可视化界面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.52.131/zabbix/setup.php</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4okcieqdj21bp0o33zj.jpg" alt="image"></p>
+<hr>
+<p>检查安装环境：</p>
+<p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4olxs7hej20p00etwfj.jpg" alt="image"></p>
+<hr>
+<p>设置数据库相关信息：</p>
+<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4onil4ubj20nw0e93z9.jpg" alt="image"></p>
+<h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4ophksrmj20ns0e2wf0.jpg" alt="image"></h2><p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4oqisv5gj20nq0e7aal.jpg" alt="image"></p>
+<hr>
+<p>默认的管理员账户和密码是 admin 和 zabbix   </p>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4ors4723j20aw0domxb.jpg" alt="image"></p>
+<hr>
+<p>这就是server端的仪表盘，接下来将language改为中文即可完成server端的配置<br><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4ot9vus0j21bq0oe40t.jpg" alt="image"></p>
+<hr>
+<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4ovksm01j20yx05bt97.jpg" alt="image"></p>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4oxgt9h8j20ff0alq37.jpg" alt="image"></p>
+<p><img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4oyff423j20z80lh75m.jpg" alt="image"></p>
+<p>至此Zabbix的Server端基础配置就告一个段落了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://wx4.sinaimg.cn/mw690/95dda403gy1foqtycgtzpj20yi1au78x.jpg" alt="Lan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://wx3.sinaimg.cn/mw690/95dda403gy1foqtyfg50aj20p011iwi1.jpg" alt="Lan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/06/开源监控系统Zabbix/" rel="next" title="开源监控系统Zabbix">
+                <i class="fa fa-chevron-left"></i> 开源监控系统Zabbix
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://wx4.sinaimg.cn/mw690/95dda403ly1fo11h8w14mg20dc0dctzm.gif"
+                alt="Lan" />
+            
+              <p class="site-author-name" itemprop="name">Lan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Indigotin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:Indigtinlan@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-etc-yum-repos-d-mysql-community-repo"><span class="nav-number">1.</span> <span class="nav-text">vim /etc/yum.repos.d/mysql-community.repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以下列出的是需要修改的项目："><span class="nav-number">2.1.</span> <span class="nav-text">以下列出的是需要修改的项目：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number">3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接下来就可以进行可视化页面的配置了："><span class="nav-number">3.1.</span> <span class="nav-text">接下来就可以进行可视化页面的配置了：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-2"><span class="nav-number">4.</span> <span class="nav-text"></span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lan</span>
+
+  
+</div>
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
