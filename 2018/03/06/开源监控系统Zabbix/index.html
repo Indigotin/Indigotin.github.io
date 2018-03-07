@@ -86,15 +86,15 @@
 <meta property="og:site_name" content="Child">
 <meta property="og:description" content="继上一篇监控脚本之后，应要求需要找到一个开源监控系统，能直接对应用进程进行检测，例如Tomcat等应用程序，通过这些应用程序能够实时知道项目的运行情况。 最后基本确定了两个开源项目: Zabbix 和 Nagios看了许多比较之后还是觉得Zabbix跟加适合这次的分布式系统，以及zabbix提供的JMX接口也可以很好的监控与java相关的程序。 什么是zabbix呢？zabbix是一个基于WEB界">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://note.youdao.com/favicon.ico">
-<meta property="og:image" content="http://note.youdao.com/favicon.ico">
-<meta property="og:image" content="http://note.youdao.com/favicon.ico">
-<meta property="og:image" content="http://note.youdao.com/favicon.ico">
-<meta property="og:updated_time" content="2018-03-06T15:27:55.115Z">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4226aw54j20jg0h874p.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4228hbyhj20jg0h8wf1.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp422amqr6j20j908rwf1.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp422cnnt0j20gw09umyg.jpg">
+<meta property="og:updated_time" content="2018-03-07T02:45:17.588Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开源监控系统Zabbix">
 <meta name="twitter:description" content="继上一篇监控脚本之后，应要求需要找到一个开源监控系统，能直接对应用进程进行检测，例如Tomcat等应用程序，通过这些应用程序能够实时知道项目的运行情况。 最后基本确定了两个开源项目: Zabbix 和 Nagios看了许多比较之后还是觉得Zabbix跟加适合这次的分布式系统，以及zabbix提供的JMX接口也可以很好的监控与java相关的程序。 什么是zabbix呢？zabbix是一个基于WEB界">
-<meta name="twitter:image" content="http://note.youdao.com/favicon.ico">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4226aw54j20jg0h874p.jpg">
 
 
 
@@ -328,17 +328,17 @@
 <p>因此他的可监控对象包括:<br>•    设备:服务器、路由器、交换机、IO系统<br>•    软件:OS、网络、应用程序  </p>
 <h2 id="常见架构："><a href="#常见架构：" class="headerlink" title="常见架构："></a>常见架构：</h2><ol>
 <li><p>Server/Agent模式：</p>
-<p> <img src="http://note.youdao.com/favicon.ico" alt="image"></p>
+<p> <img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4226aw54j20jg0h874p.jpg" alt="image"></p>
 </li>
-<li>Proxy代理模式：<br> <img src="http://note.youdao.com/favicon.ico" alt="image"></li>
+<li>Proxy代理模式：<br> <img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp4228hbyhj20jg0h8wf1.jpg" alt="image"></li>
 </ol>
 <p>这种模式的好处在于，当Agent主机数量变多的时候，Proxy可以分担Server端的压力。     由于只是搭建测试，因此我只使用了一台虚拟机做服务器，以及一个agent端，因此选用的是Server/Agent模式。</p>
 <h2 id="Zabbix支持的主要监控方式："><a href="#Zabbix支持的主要监控方式：" class="headerlink" title="Zabbix支持的主要监控方式："></a>Zabbix支持的主要监控方式：</h2><p>Zabbix主要有Agent, Trapper, SNMP, JMX, IPMI这几种监控方式。此次主要使用的是Agent和JMX方式，主要介绍一下这两种监控方式。</p>
 <h3 id="Agent监控方式"><a href="#Agent监控方式" class="headerlink" title="Agent监控方式"></a>Agent监控方式</h3><p>在Agent监控方式下，zabbix-agent会主动收集本机的监控信息并通过TCP协议与zabbix-server传递信息。Agent监控方式分为主动和被动模式。在被动模式下，zabbix-agent监听10050端口，等待zabbix-server的监控信息收集信息请求；在主动模式下，zabbix-agent收集监控信息并通过10050端口主动将数据传给zabbix-server所在服务器的10051端口。</p>
 <h3 id="JMX监控方式"><a href="#JMX监控方式" class="headerlink" title="JMX监控方式"></a>JMX监控方式</h3><p>JMX，全称Java Management Extensions，即Java管理拓展，是Java平台为应用程序，设备，系统等植入管理功能的框架。在zabbix中，JMX数据的获取由zabbix-java-gateway代理程序来负责数据的采集。可以详细地监控各类Java程序的运行状态。</p>
-<p><img src="http://note.youdao.com/favicon.ico" alt="image"></p>
-<p>如上面的Zabbix JMX监控架构图所示，Zabbix是使用了一个叫做Java Gateway的应用去监控JMX的。<br>前端界面由php提供支持，因此需要配置LAMP环境。后端采取到数据库后将数据存放在数据库中，因此又要完成数据库相关的配置。<br>然后前端界面从数据库中读取信息来显示到网页上。总体架构如下所示。</p>
-<p><img src="http://note.youdao.com/favicon.ico" alt="image"></p>
+<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp422amqr6j20j908rwf1.jpg" alt="image"></p>
+<p>如上面的Zabbix JMX监控架构图所示，Zabbix是使用了一个叫做Java Gateway的应用去监控JMX的。<br>前端界面由php提供支持，因此需要配置LAMP环境。后端采取到数据库后将数据存放在数据库中，因此又要完成数据库相关的配置。<br>然后前端界面从数据库中读取信息来显示到网页上。大部分的提供图像的监控系统都是通过这种方式来显示图像的。总体架构如下所示。</p>
+<p><img src="http://wx1.sinaimg.cn/mw690/95dda403gy1fp422cnnt0j20gw09umyg.jpg" alt="image"></p>
 
       
     </div>
