@@ -133,7 +133,7 @@
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/95dda403gy1fp4ovksm01j20yx05bt97.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4oxgt9h8j20ff0alq37.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/95dda403gy1fp4oyff423j20z80lh75m.jpg">
-<meta property="og:updated_time" content="2018-03-07T15:56:10.492Z">
+<meta property="og:updated_time" content="2018-03-07T15:59:05.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zabbix的Server端搭建">
 <meta name="twitter:description" content="首先说明一下我的配置环境： 1Server：CentOS 7.4 vmware虚拟机 首先为server端配置zabbix、epel的源 12rpm -ivh http://repo.zabbix.com/zabbix/3.5/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm yum install -y epel-release    清除系统y">
@@ -423,7 +423,9 @@
 <p>停止mysql服务开机自启动<br>systemctl disable mysqld.service</p>
 <p>重新载入<br>systemctl daemon-reload </p>
 <p>调整mysql源的默认版本号：（修改对应版本下的enabled即可） 1启用 0不启用   </p>
-<h2 id="vim-etc-yum-repos-d-mysql-community-repo"><a href="#vim-etc-yum-repos-d-mysql-community-repo" class="headerlink" title="vim /etc/yum.repos.d/mysql-community.repo"></a>vim /etc/yum.repos.d/mysql-community.repo</h2><p>接下来修改root登录密码<br>mysql第一次启动时，会在/var/log/mysqld.log文件中生成一个root的临时密码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/mysql-community.repo</span><br></pre></td></tr></table></figure>
+<hr>
+<p>接下来修改root登录密码<br>mysql第一次启动时，会在/var/log/mysqld.log文件中生成一个root的临时密码。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &apos;temporary password&apos; /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
 <hr>
 <p>登录系统，修改root密码</p>
@@ -703,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-etc-yum-repos-d-mysql-community-repo"><span class="nav-number">1.</span> <span class="nav-text">vim /etc/yum.repos.d/mysql-community.repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以下列出的是需要修改的项目："><span class="nav-number">2.1.</span> <span class="nav-text">以下列出的是需要修改的项目：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number">3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接下来就可以进行可视化页面的配置了："><span class="nav-number">3.1.</span> <span class="nav-text">接下来就可以进行可视化页面的配置了：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-2"><span class="nav-number">4.</span> <span class="nav-text"></span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以下列出的是需要修改的项目："><span class="nav-number">1.1.</span> <span class="nav-text">以下列出的是需要修改的项目：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number">2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接下来就可以进行可视化页面的配置了："><span class="nav-number">2.1.</span> <span class="nav-text">接下来就可以进行可视化页面的配置了：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-2"><span class="nav-number">3.</span> <span class="nav-text"></span></a></li></ol></div>
             
 
           </div>

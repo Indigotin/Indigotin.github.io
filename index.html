@@ -376,7 +376,9 @@
 <p>停止mysql服务开机自启动<br>systemctl disable mysqld.service</p>
 <p>重新载入<br>systemctl daemon-reload </p>
 <p>调整mysql源的默认版本号：（修改对应版本下的enabled即可） 1启用 0不启用   </p>
-<h2 id="vim-etc-yum-repos-d-mysql-community-repo"><a href="#vim-etc-yum-repos-d-mysql-community-repo" class="headerlink" title="vim /etc/yum.repos.d/mysql-community.repo"></a>vim /etc/yum.repos.d/mysql-community.repo</h2><p>接下来修改root登录密码<br>mysql第一次启动时，会在/var/log/mysqld.log文件中生成一个root的临时密码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/mysql-community.repo</span><br></pre></td></tr></table></figure>
+<hr>
+<p>接下来修改root登录密码<br>mysql第一次启动时，会在/var/log/mysqld.log文件中生成一个root的临时密码。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &apos;temporary password&apos; /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
 <hr>
 <p>登录系统，修改root密码</p>
