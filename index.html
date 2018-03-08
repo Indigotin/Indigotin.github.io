@@ -329,10 +329,7 @@
 <li>被动模式<br> 此处的被动是相对于agent来说的，agent不主动发送数据，而是通过Server端来主动拉取数据。<br> <img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp5ch06k2mj20lp0h6t9v.jpg" alt="image"><br> 配置的参数意义如下：<pre><code>Server：指定那台服务器拉取数据，server端的ip必须与此参数对应，当server端有多个时，可以使用逗号隔开   
 </code></pre></li>
 </ol>
-<blockquote>
-<pre><code>有时候虚拟机的IP地址会飘忽不定，如果server端无法拉取到agent端的数据，极有可能是server的ip地址出现了错误。此时可以打开日志文件查看相关信息：
-</code></pre></blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /var/log/zabbix/zabbix_agentd.log</span><br></pre></td></tr></table></figure>
+<h3 id="有时候虚拟机的IP地址会飘忽不定，如果server端无法拉取到agent端的数据，极有可能是server的ip地址出现了错误。此时可以打开日志文件查看相关信息："><a href="#有时候虚拟机的IP地址会飘忽不定，如果server端无法拉取到agent端的数据，极有可能是server的ip地址出现了错误。此时可以打开日志文件查看相关信息：" class="headerlink" title="有时候虚拟机的IP地址会飘忽不定，如果server端无法拉取到agent端的数据，极有可能是server的ip地址出现了错误。此时可以打开日志文件查看相关信息："></a>有时候虚拟机的IP地址会飘忽不定，如果server端无法拉取到agent端的数据，极有可能是server的ip地址出现了错误。此时可以打开日志文件查看相关信息：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /var/log/zabbix/zabbix_agentd.log</span><br></pre></td></tr></table></figure>
 <p><img src="http://wx4.sinaimg.cn/mw690/95dda403gy1fp5cty9d0vj215r04wmy9.jpg" alt="image"><br>由此便可得到正确的IP地址。</p>
 <ol>
 <li>主动模式<br> 在此工作模式下，agent会将采集到的数据主动发送给Server。<br> <img src="http://wx2.sinaimg.cn/mw690/95dda403gy1fp5ch2h244j20kn0bb3z5.jpg" alt="image"><br> <img src="http://wx3.sinaimg.cn/mw690/95dda403gy1fp5cihlzkzj20gl04edft.jpg" alt="image"><br> ServerActive：此参数表明处于主动模式下，agent将数据发送到哪台服务器上。<br> Hostname：指定当前主机的主机名，server端通过此参数对应的主机名识别当前主机。<br> RefreshActiveChecks：指定agent每隔多少秒将采集到的数据发往server端。</li>
